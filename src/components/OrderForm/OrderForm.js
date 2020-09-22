@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getOrders } from '../../apiCalls';
+import PropTypes from 'prop-types'
 
 class OrderForm extends Component {
   constructor(props) {
@@ -17,7 +17,9 @@ class OrderForm extends Component {
 
   handleIngredientChange = (e) => {
     e.preventDefault();
-    this.state.ingredients.push(e.target.name)
+    let i = this.state.ingredients
+    i.push(e.target.name)
+    this.setState({ ingredients: i })
   }
 
   handleSubmit = e => {
@@ -62,6 +64,10 @@ class OrderForm extends Component {
       </form>
     )
   }
+}
+
+OrderForm.propTypes = {
+  updateOrders: PropTypes.func
 }
 
 export default OrderForm;
