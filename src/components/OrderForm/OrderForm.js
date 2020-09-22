@@ -18,7 +18,15 @@ class OrderForm extends Component {
   handleIngredientChange = (e) => {
     e.preventDefault();
     let currentIngredients = this.state.ingredients
-    if(!currentIngredients.includes(e.target.name)) {
+
+    let num = currentIngredients.reduce((acc, ingredient) => {
+      if(ingredient === e.target.name) {
+        acc++
+      }
+      return acc 
+    }, 0)
+    console.log(num)
+    if(num < 2) {
       currentIngredients.push(e.target.name)
       this.setState({ ingredients: currentIngredients })
     }
