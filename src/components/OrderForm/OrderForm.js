@@ -18,8 +18,10 @@ class OrderForm extends Component {
   handleIngredientChange = (e) => {
     e.preventDefault();
     let i = this.state.ingredients
-    i.push(e.target.name)
-    this.setState({ ingredients: i })
+    if(!i.includes(e.target.value)) {
+      i.push(e.target.name)
+      this.setState({ ingredients: i })
+    }
   }
 
   handleSubmit = e => {
@@ -42,7 +44,7 @@ class OrderForm extends Component {
           {ingredient}
         </button>
       )
-    });
+    })
 
     return (
       <form>
