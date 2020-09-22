@@ -17,10 +17,10 @@ class OrderForm extends Component {
 
   handleIngredientChange = (e) => {
     e.preventDefault();
-    let i = this.state.ingredients
-    if(!i.includes(e.target.value)) {
-      i.push(e.target.name)
-      this.setState({ ingredients: i })
+    let currentIngredients = this.state.ingredients
+    if(!currentIngredients.includes(e.target.name)) {
+      currentIngredients.push(e.target.name)
+      this.setState({ ingredients: currentIngredients })
     }
   }
 
