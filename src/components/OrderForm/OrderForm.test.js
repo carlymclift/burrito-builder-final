@@ -78,6 +78,7 @@ describe('OrderForm', () => {
       expect(mockFun).toBeCalledTimes(1)
   })
 
+  // Attempted test, didn't get it working in time
 //   it('Should display the order when a button is clicked', () => {
 //     const mockFun = jest.fn()  
 //     render(
