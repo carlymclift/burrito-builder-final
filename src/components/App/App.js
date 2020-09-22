@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { getOrders, addOrder } from '../../apiCalls';
+import { getOrders, addOrder, removeOrder } from '../../apiCalls';
 import Orders from '../../components/Orders/Orders';
 import OrderForm from '../../components/OrderForm/OrderForm';
 
@@ -25,8 +25,17 @@ class App extends Component {
 
   updateOrders = async (name, ingredients) => {
     try {
-      const postOrder = await addOrder(name, ingredients)
-      console.log(postOrder)
+      await addOrder(name, ingredients)
+      const orders = await getOrders()
+      this.setState({ orders: orders.orders })
+    } catch (error) {
+      this.setState({ error: '' })
+    }
+  }
+
+  removeOrder = async (orderId) => {
+    try {
+      await removeOrder(orderId)
       const orders = await getOrders()
       this.setState({ orders: orders.orders })
     } catch (error) {
@@ -42,7 +51,7 @@ class App extends Component {
           <OrderForm updateOrders={this.updateOrders}/>
         </header>
 
-        <Orders orders={this.state.orders}/>
+        <Orders orders={this.state.orders} removeOrder={this.removeOrder} />
       </main>
     );
   }
