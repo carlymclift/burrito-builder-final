@@ -19,3 +19,11 @@ export const addOrder = async (name, ingredients) => {
   const message = await response.json()
   return message
 }
+
+export const removeOrder = async (orderId) => {
+  const response = await fetch(`http://localhost:3001/api/v1/orders/${orderId}`, {
+    "method": "DELETE"
+  })
+  const message = await response
+  return message
+}
