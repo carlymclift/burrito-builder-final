@@ -65,13 +65,29 @@ describe('OrderForm', () => {
       }  
       const { input } = setup()
       expect(input.value).toBe('')
+      fireEvent.click(screen.getByRole('button', { name: 'beans' }))
+      fireEvent.click(screen.getByRole('button', { name: 'Submit Order' }))
+
+      expect(mockFun).toBeCalledTimes(0)
+
       fireEvent.change(input, { target: { value: 'Carly' } })
       expect(input.value).toBe('Carly')
 
-      const button = screen.getByRole('button', { name: 'beans' })
-      fireEvent.click(button)
-
+      fireEvent.click(screen.getByRole('button', { name: 'beans' }))
       fireEvent.click(screen.getByRole('button', { name: 'Submit Order' }))
       expect(mockFun).toBeCalledTimes(1)
   })
+
+//   it('Should display the order when a button is clicked', () => {
+//     const mockFun = jest.fn()  
+//     render(
+//       <OrderForm 
+//         updateOrders={mockFun}
+//       />)  
+    
+//     expect(screen.getAllByText(/order: nothing selected/i)).toBeInTheDocument()
+//     fireEvent.click(screen.getByRole('button', { name: 'beans' }))
+//     expect(screen.getAllByText(/order: beans/i)).toBeInTheDocument()
+     
+//   })
 })
