@@ -1,17 +1,37 @@
 import React, { Component } from 'react';
 import './App.css';
-import {getOrders} from '../../apiCalls';
+import { getOrders, addOrder } from '../../apiCalls';
 import Orders from '../../components/Orders/Orders';
 import OrderForm from '../../components/OrderForm/OrderForm';
 
 class App extends Component {
   constructor(props) {
-    super();
+    super()
+    this.state = {
+      orders: [],
+      error: ''
+    }
   }
 
-  componentDidMount() {
-    getOrders()
-      .catch(err => console.error('Error fetching:', err));
+  async componentDidMount() {
+    try {
+      const orders = await getOrders()
+      console.log(orders)
+      this.setState({ orders: orders.orders })
+    } catch (error) {
+      this.setState({ error: '' })
+    }
+  }
+
+  updateOrders = async (name, ingredients) => {
+    try {
+      const postOrder = await addOrder(name, ingredients)
+      console.log(postOrder)
+      const orders = await getOrders()
+      this.setState({ orders: orders.orders })
+    } catch (error) {
+      this.setState({ error: '' })
+    }
   }
 
   render() {
@@ -19,7 +39,7 @@ class App extends Component {
       <main className="App">
         <header>
           <h1>Burrito Builder</h1>
-          <OrderForm />
+          <OrderForm updateOrders={this.updateOrders}/>
         </header>
 
         <Orders orders={this.state.orders}/>
