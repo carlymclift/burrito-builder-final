@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from './App';
-import { getOrders, addOrder } from '../../apiCalls';
+import { getOrders, addOrder, removeOrder } from '../../apiCalls';
 import '@testing-library/jest-dom'
 jest.mock('../../apiCalls');
 
@@ -74,5 +74,31 @@ describe('OrderForm', () => {
       expect(nameOnOrder).toBeInTheDocument()
   })
 
-  
+  it('Should be able to delete an order', async () => {
+    getOrders.mockResolvedValue({
+        orders: [
+          {
+          id: 1,
+          ingredients: ['beans', 'lettuce', 'carnitas'],
+          name: 'Pat'
+          }
+        ]
+      })
+
+    render(<App />)  
+
+    const nameOnOrder = await waitFor( () => screen.getByText('Pat'))
+    expect(nameOnOrder).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Delete'}))
+
+    removeOrder.mockResolvedValue('Success')
+
+    getOrders.mockResolvedValue({
+        orders: []
+      })
+
+    const nameOnOrder2 = await waitFor( () => screen.getByText('Pat'))
+    expect(nameOnOrder2).not.toBeInTheDocument()
+  })
 })
