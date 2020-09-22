@@ -16,7 +16,6 @@ class App extends Component {
   async componentDidMount() {
     try {
       const orders = await getOrders()
-      console.log(orders)
       this.setState({ orders: orders.orders })
     } catch (error) {
       this.setState({ error: '' })
